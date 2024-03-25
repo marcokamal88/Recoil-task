@@ -4,10 +4,10 @@ import { useRecoilState } from "recoil";
 import isAuthState from "./authState";
 import axios from "axios";
 
-const Login = () => {
+export default function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [, setIsLoggedIn] = useRecoilState(isAuthState);
+  const [isLogged, setIsLoggedIn] = useRecoilState(isAuthState);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -25,11 +25,12 @@ const Login = () => {
           }
         )
         .then((res) => {
-          localStorage.setItem("token", res.data.token);
           console.log(res.data);
+          localStorage.setItem("token", res.data.token);
+          // setIsLoggedIn(false);
+          isAuthState ? console.log("true") : console.log(false);
         })
-        .catch((error) => console.error(error));
-      setIsLoggedIn(true);
+        .catch((error) => console.log("you r not authorized to log in"));
     } catch (error) {
       console.log(`error`);
     }
@@ -57,5 +58,4 @@ const Login = () => {
       </form>
     </div>
   );
-};
-export default Login;
+}
