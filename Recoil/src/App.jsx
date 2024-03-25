@@ -7,12 +7,20 @@ import NoPage from "./NoPage";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function App() {
+  // localStorage.clear();
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route index element={<Login />} />
-          <Route path="/Login" element={<Login />} />
+          <Route
+            path="/Login"
+            element={
+              <ProtectedRoute>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/Home"
             element={
@@ -21,6 +29,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>

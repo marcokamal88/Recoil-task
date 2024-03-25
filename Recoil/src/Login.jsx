@@ -3,11 +3,14 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import isAuthState from "./authState";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isLogged, setIsLoggedIn] = useRecoilState(isAuthState);
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -27,8 +30,8 @@ export default function Login() {
         .then((res) => {
           console.log(res.data);
           localStorage.setItem("token", res.data.token);
-          // setIsLoggedIn(false);
-          isAuthState ? console.log("true") : console.log(false);
+          setIsLoggedIn(true);
+          navigate("/Home");
         })
         .catch((error) => console.log("you r not authorized to log in"));
     } catch (error) {

@@ -1,9 +1,22 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import isAuthState from "./authState";
+import { useRecoilState } from "recoil";
 
-export default function ProtectedRoute() {
-  if (!isAuthState) {
-    return <Navigate to="/Login" />;
+export default function ProtectedRoute({ children }) {
+  const { pathname } = useLocation();
+  const [auth] = useRecoilState(isAuthState);
+  console.log(auth, pathname);
+  if (auth && pathname.toLocaleLowerCase() == "/login") {
+    return <Navigate to="/Home" />;
   }
-  return <Navigate to="/Home" />;
+  if (!auth && pathname.toLocaleLowerCase() != "/login") {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+
+  // console.log(pathname);
+  // if (!auth && window.location.href === "") {
+  //   return children;
+  // } else return <Navigate to="/Home" />;
 }
