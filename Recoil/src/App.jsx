@@ -5,7 +5,7 @@ import Login from "./Login";
 import Home from "./Home";
 import NoPage from "./NoPage";
 import ProtectedRoute from "./ProtectedRoute.jsx";
-
+import FacebookLogin from "./FacbookLogin.jsx";
 function App() {
   // localStorage.clear();
   return (

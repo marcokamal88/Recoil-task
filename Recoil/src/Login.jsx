@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import isAuthState from "./authState";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import FacebookButton from "./FacbookLogin";
 
 export default function Login() {
   const [userName, setUserName] = useState("");
@@ -59,6 +60,8 @@ export default function Login() {
         />
         <button type="submit">Login</button>
       </form>
+      <br />
+      <FacebookButton />
     </div>
   );
 }
