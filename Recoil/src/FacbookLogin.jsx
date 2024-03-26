@@ -1,18 +1,31 @@
+import { useState } from "react";
+import isAuthState from "./authState";
 import FacebookLogin from "react-facebook-login";
-export default function FacebookButton() {
+import { useRecoilState } from "recoil";
+
+const FacebookButton = () => {
+  const [accessToken, setAccessToken] = useState("");
+  const [, setIsLoggedIn] = useRecoilState(isAuthState);
   const componentClicked = (data) => {
-    console.log(`data is : ${data}`);
+    console.log("data", data);
   };
-  const responseFacebook = (res) => {
-    console.log(res);
+  const responseFacebook = (response) => {
+    console.log(response.accessToken);
+    setAccessToken(response.accessToken);
+    localStorage.setItem("token", response.accessToken);
+    setIsLoggedIn(true);
   };
   return (
-    <FacebookLogin
-      appId="1088597931155576"
-      autoLoad={true}
-      fields="name,email,picture"
-      onClick={componentClicked}
-      callback={responseFacebook}
-    />
+    <div>
+      {accessToken}
+      <FacebookLogin
+        appId="334647792468483"
+        autoLoad={true}
+        fields="name,email,picture"
+        onClick={componentClicked}
+        callback={responseFacebook}
+      />
+    </div>
   );
-}
+};
+export default FacebookButton;
